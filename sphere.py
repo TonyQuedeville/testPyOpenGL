@@ -23,7 +23,7 @@ def display():
     gl.glClear(gl.GL_COLOR_BUFFER_BIT | gl.GL_DEPTH_BUFFER_BIT)
     gl.glLoadIdentity()
     gl.glTranslatef(0.0, 0.0, -5.0)
-
+    gl.glColor3f(1.,1.,0.)
     glut.glutSolidSphere(1, 50, 50)  # Dessine une sphère de rayon 1
 
     glut.glutSwapBuffers()

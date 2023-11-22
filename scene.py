@@ -3,12 +3,6 @@ import OpenGL.GLUT as glut
 import OpenGL.GLU as glu
 import math
 
-# Position et couleur de la lumière
-light_position = [1.0, 1.0, 1.0, 0.0]
-light_ambient = [0.2, 0.2, 0.2, 1.0]
-light_diffuse = [1.0, 1.0, 1.0, 1.0]
-light_specular = [1.0, 1.0, 1.0, 1.0]
-
 # Position et orientation de la caméra
 camera_position = [0.0, 0.0, 8.0]
 look_at_position = [0.0, 0.0, 0.0]
@@ -22,6 +16,12 @@ last_x, last_y = 0, 0
 sphere_position = [-2.0, 0.0, 0.0]
 cube_position = [2.0, 0.0, 0.0]
 tetrahedre_position = [0.0, 2.0, 0.0]
+
+# Position et couleur de la lumière
+light_position = [1.0, 1.0, 1.0, 0.0]
+light_ambient = [0.0, 0.5, 0.5, 1.0]
+light_diffuse = [0.8, 0.8, 0.8, 1.0]
+light_specular = [0.8, 0.8, 0.8, 1.0]
 
 def init_light():
     gl.glLightfv(gl.GL_LIGHT0, gl.GL_POSITION, light_position)
@@ -37,18 +37,21 @@ def draw_objects():
     # Sphère
     gl.glPushMatrix()
     gl.glTranslatef(*sphere_position)
+    gl.glColor3f(1.,1.,0.)
     glut.glutSolidSphere(1, 50, 50)
     gl.glPopMatrix()
 
     # Cube
     gl.glPushMatrix()
     gl.glTranslatef(*cube_position)
+    gl.glColor3f(1.,0.,0.)
     glut.glutSolidCube(1)
     gl.glPopMatrix()
 
     # Tétraèdre
     gl.glPushMatrix()
     gl.glTranslatef(*tetrahedre_position)
+    gl.glColor3f(0.,0.,1.)
     glut.glutSolidTetrahedron()
     gl.glPopMatrix()
 
@@ -56,6 +59,7 @@ def draw_objects():
     gl.glPushMatrix()
     gl.glTranslatef(0.0, -2.0, 0.0)
     gl.glScalef(10.0, 0.1, 10.0)  # Ajuster la taille du plan
+    gl.glColor3f(0.2,0.2,0.2)
     glut.glutSolidCube(1)  # Utiliser un cube pour représenter le plan
     gl.glPopMatrix()
 
@@ -78,7 +82,6 @@ def mouse_click(button, state, x, y):
     if button == glut.GLUT_LEFT_BUTTON and state == glut.GLUT_DOWN:
         # Capture le clic gauche pour activer le mouvement de la caméra
         last_x, last_y = x, y
-        # glut.glutMotionFunc(mouse_motion)  # Associe la fonction de mouvement à la souris
 
 def mouse_motion(x, y):
     global last_x, last_y, camera_yaw, camera_pitch, sensitivity    
@@ -138,7 +141,7 @@ def reshape(width, height):
     gl.glViewport(0, 0, width, height)
     gl.glMatrixMode(gl.GL_PROJECTION)
     gl.glLoadIdentity()
-    glu.gluPerspective(45, (width / height), 0.1, 100.0)
+    glu.gluPerspective(60, (width / height), 0.1, 100.0)
     gl.glMatrixMode(gl.GL_MODELVIEW)
 
 def main():
@@ -146,9 +149,9 @@ def main():
     glut.glutInitDisplayMode(glut.GLUT_DOUBLE | glut.GLUT_RGB | glut.GLUT_DEPTH)
     glut.glutInitWindowSize(800, 600)
     glut.glutCreateWindow(b"Multiple Objects OpenGL Example")
-    gl.glClearColor(0.0, 0.0, 0.0, 1.0)
     gl.glEnable(gl.GL_DEPTH_TEST)
     init_light()
+    gl.glClearColor(0.0, 0.0, 0.1, 1.0) # couleur de fond
     glut.glutDisplayFunc(display)
     glut.glutReshapeFunc(reshape)
     glut.glutSpecialFunc(special_keys)  # Gestion clavier

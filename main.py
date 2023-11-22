@@ -1,8 +1,11 @@
 # Initiation à pyOpenGl
 
+# pip install PyOpenGL
+# pip install PyOpenGL PyOpenGL_accelerate
+
+
 import sys
 
-#  pip install PyOpenGL
 import OpenGL.GL as gl
 import OpenGL.GLUT as glut
 
